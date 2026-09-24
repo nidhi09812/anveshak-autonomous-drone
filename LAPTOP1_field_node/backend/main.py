@@ -147,15 +147,13 @@ async def detect_image(
     # YOLO detection
     # ----------------------------------------------
 
-    result = detector.predict(frame)
-
     detections = detector.detect(frame)
 
     # ----------------------------------------------
     # Draw bounding boxes
     # ----------------------------------------------
 
-    annotated = detector.annotate(result)
+    annotated = detector.annotate(detections, frame)
 
     # ----------------------------------------------
     # Convert image to JPEG

@@ -38,7 +38,7 @@ OFFLINE_QUEUE_FILE = os.path.join(
 # if MODEL_PATH ever falls back to something else (e.g. a stock
 # yolov8n.pt during setup), the dashboard is told so it can flag that
 # fire/flood detection isn't available yet.
-USING_TRAINED_MODEL = os.path.basename(MODEL_PATH) == "best.pt"
+USING_TRAINED_MODEL = os.path.basename(MODEL_PATH) == "best.onnx"
 
 
 def build_dashboard_event(drishti_response: dict) -> dict:

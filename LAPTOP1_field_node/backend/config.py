@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # checkpoint (e.g. a fresh training run's best.pt) without editing code.
 MODEL_PATH = os.environ.get(
     "DRISHTI_MODEL_PATH",
-    str(BASE_DIR / "best.pt")
+    str(BASE_DIR / "best.onnx")
 )
 
 
