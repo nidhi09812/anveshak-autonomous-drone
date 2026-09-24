@@ -1,0 +1,760 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+
+/* =========================================
+   RESET
+========================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  background: #000000;
+  color: #ffffff;
+
+  font-family: "Inter", sans-serif;
+
+  min-width: 320px;
+}
+
+
+/* =========================================
+   APP
+========================================= */
+
+.app {
+  min-height: 100vh;
+  background: #000000;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+
+  min-height: 125px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 25px 4%;
+
+  border-bottom: 1px solid #242424;
+
+  background: #050505;
+
+}
+
+
+.brand-section {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+}
+
+
+.brand-icon {
+
+  width: 60px;
+
+  height: 60px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: 1px solid #303030;
+
+  border-radius: 16px;
+
+  color: #ff3b30;
+
+  font-size: 34px;
+
+}
+
+
+.brand-title {
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 42px;
+
+  font-weight: 700;
+
+  letter-spacing: 4px;
+
+}
+
+
+.brand-subtitle {
+
+  margin-top: 4px;
+
+  color: #aaaaaa;
+
+  font-size: 16px;
+
+}
+
+
+.header-right {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 11px 18px;
+
+  border: 1px solid #303030;
+
+  border-radius: 30px;
+
+  color: #6ee7a0;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  letter-spacing: 1px;
+
+}
+
+
+.connection-icon {
+
+  font-size: 12px;
+
+}
+
+
+.status-dot {
+
+  width: 9px;
+
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: #62e69a;
+
+  display: inline-block;
+
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.main-container {
+
+  width: 92%;
+
+  max-width: 1600px;
+
+  margin: 0 auto;
+
+  padding: 45px 0 70px;
+
+}
+
+
+.top-status {
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-bottom: 20px;
+
+}
+
+
+.status-badge {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  color: #62e69a;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}
+
+
+.status-processing {
+
+  color: #ff5b50;
+
+}
+
+
+.status-processing .status-dot {
+
+  background: #ff5b50;
+
+}
+
+
+/* =========================================
+   DASHBOARD GRID
+========================================= */
+
+.dashboard-grid {
+
+  display: grid;
+
+  grid-template-columns: minmax(0, 640px);
+
+  justify-content: center;
+
+  gap: 28px;
+
+}
+
+
+/* =========================================
+   PANELS
+========================================= */
+
+.upload-panel {
+
+  background: #050505;
+
+  border: 1px solid #292929;
+
+  border-radius: 20px;
+
+  padding: 36px;
+
+}
+
+
+.panel-header h2 {
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 28px;
+
+  font-weight: 600;
+
+}
+
+
+.panel-header p {
+
+  margin-top: 10px;
+
+  color: #a9a9a9;
+
+  line-height: 1.6;
+
+}
+
+
+/* =========================================
+   UPLOAD
+========================================= */
+
+.upload-area {
+
+  height: 310px;
+
+  margin-top: 28px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  border: 1px dashed #444444;
+
+  border-radius: 16px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+
+}
+
+
+.upload-area:hover {
+
+  border-color: #ff3b30;
+
+  background: #080808;
+
+}
+
+
+.upload-area input {
+
+  display: none;
+
+}
+
+
+.upload-icon {
+
+  color: #ff3b30;
+
+  font-size: 42px;
+
+  margin-bottom: 15px;
+
+}
+
+
+.upload-area h3 {
+
+  font-size: 19px;
+
+  font-weight: 600;
+
+}
+
+
+.upload-area p {
+
+  margin-top: 8px;
+
+  color: #999999;
+
+}
+
+
+.upload-area span {
+
+  margin-top: 15px;
+
+  color: #666666;
+
+  font-size: 12px;
+
+}
+
+
+/* =========================================
+   SELECTED FILE
+========================================= */
+
+.selected-file {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 15px;
+
+  padding: 14px 16px;
+
+  border: 1px solid #292929;
+
+  border-radius: 10px;
+
+  background: #080808;
+
+  color: #eeeeee;
+
+  font-size: 14px;
+
+  overflow: hidden;
+
+}
+
+
+.selected-file span:last-child {
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.detect-button {
+
+  width: 100%;
+
+  margin-top: 15px;
+
+  height: 56px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #000000;
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+
+}
+
+
+.detect-button:hover {
+
+  background: #eeeeee;
+
+  transform: translateY(-1px);
+
+}
+
+
+.detect-button:disabled {
+
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+}
+
+
+.upload-message {
+
+  margin-top: 15px;
+
+  text-align: center;
+
+  color: #777777;
+
+  font-size: 13px;
+
+}
+
+
+.upload-message.ready {
+
+  color: #6ee7a0;
+
+}
+
+
+/* =========================================
+   SENT CONFIRMATION
+========================================= */
+
+.sent-confirmation {
+
+  margin-top: 28px;
+
+  padding: 20px 24px;
+
+  border: 1px solid #254c35;
+
+  border-radius: 14px;
+
+  background: #0a140d;
+
+  color: #6ee7a0;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+
+}
+
+
+/* =========================================
+   RESULT PANEL
+========================================= */
+
+.result-panel {
+
+  margin-top: 28px;
+
+  padding: 28px;
+
+  border: 1px solid #292929;
+
+  border-radius: 16px;
+
+  background: #050505;
+
+}
+
+
+.result-panel h2 {
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 20px;
+
+  font-weight: 600;
+
+  margin-bottom: 18px;
+
+}
+
+
+.result-image {
+
+  width: 100%;
+
+  border-radius: 12px;
+
+  border: 1px solid #292929;
+
+  margin-bottom: 18px;
+
+}
+
+
+.result-list {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+}
+
+
+.result-item {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 12px 16px;
+
+  border: 1px solid #292929;
+
+  border-left: 2px solid #ff3b30;
+
+  border-radius: 10px;
+
+  background: #080808;
+
+}
+
+
+.result-item-class {
+
+  color: #eeeeee;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+
+}
+
+
+.result-item-confidence {
+
+  color: #6ee7a0;
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+}
+
+
+/* =========================================
+   INFO PANEL
+========================================= */
+
+.info-panel {
+
+  margin-top: 25px;
+
+  padding: 22px;
+
+  border: 1px solid #292929;
+
+  border-radius: 14px;
+
+  background: #080808;
+
+}
+
+
+.info-heading {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+}
+
+
+.info-heading h3 {
+
+  color: #ff4b42;
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 17px;
+
+}
+
+
+.info-icon {
+
+  color: #ff4b42;
+
+}
+
+
+.info-content {
+
+  margin-top: 18px;
+
+}
+
+
+.info-content p {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 8px 0;
+
+  color: #dddddd;
+
+  font-size: 13px;
+
+}
+
+
+.info-content span {
+
+  color: #777777;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .dashboard-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .header {
+
+    padding: 20px;
+
+  }
+
+
+  .brand-title {
+
+    font-size: 30px;
+
+  }
+
+
+  .brand-subtitle {
+
+    font-size: 12px;
+
+  }
+
+
+  .brand-icon {
+
+    width: 48px;
+
+    height: 48px;
+
+  }
+
+
+  .header-right {
+
+    display: none;
+
+  }
+
+
+  .main-container {
+
+    width: 94%;
+
+    padding-top: 25px;
+
+  }
+
+
+  .upload-panel {
+
+    padding: 22px;
+
+  }
+
+}

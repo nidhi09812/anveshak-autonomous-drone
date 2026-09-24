@@ -1,0 +1,78 @@
+ANVESHAK / PROJECT DRISHTI — LAPTOP 1 (FIELD NODE) — QUICKSTART
+=================================================================
+
+This is YOUR laptop. You get a web page where you upload a drone/field
+image, click "Detect Objects", and the AI finds people, fire, flood and
+vehicles in it. The moment it detects something, it's ALSO pushed live
+to your friend's dashboard on Laptop 2 (the command center screen).
+
+This app has TWO parts that both need to be running at the same time —
+that means TWO terminal windows.
+
+BEFORE YOU START:
+  - best.pt should already be in this folder (LAPTOP1_field_node/).
+  - Connect this laptop to the SAME WiFi as your friend's laptop.
+  - Ask your friend for her laptop's IP address (she gets it from
+    "ipconfig" on her machine, e.g. 192.168.1.20).
+  - Your friend should start HER relay server (relay_server.py, in
+    LAPTOP2_command_center) AND deploy a mission on her map (draw the 4
+    corner points, click "Deploy UAV Mission") before you upload your
+    first image — the dashboard only listens for live alerts once a
+    mission is active. If she's not ready yet, your detection just
+    queues locally and sends the moment she is.
+
+STEP 1 — TERMINAL A: start the backend (the AI brain)
+
+    cd LAPTOP1_field_node
+    pip install -r requirements.txt
+
+    Tell it where your friend's relay server is (replace with her real
+    IP — note this is port 8000, her relay_server.py, not the 5173 her
+    map page runs on):
+      Windows (cmd.exe):     set DASHBOARD_URL=http://<HER-IP>:8000
+      Windows (PowerShell):  $env:DASHBOARD_URL="http://<HER-IP>:8000"
+      Mac/Linux:             export DASHBOARD_URL=http://<HER-IP>:8000
+
+    Then run it (this loads the AI model — first run may take a bit).
+    Use a different local port than her relay if you're both testing
+    solo on the same laptop — otherwise 8000 is fine:
+      python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000
+
+    Leave this terminal running. If you skip setting DASHBOARD_URL, it
+    defaults to http://127.0.0.1:8000 (only useful when testing solo,
+    and only if you free that port up first — see the port note above).
+
+STEP 2 — TERMINAL B: start the web page (the UI you actually use)
+
+    cd LAPTOP1_field_node/frontend
+    npm install          (only needed the very first time)
+    npm run dev
+
+    It'll print a local address, normally:
+      http://localhost:5173
+
+    Open that in your browser. Upload an image, click "DETECT OBJECTS".
+    The annotated result appears on YOUR screen immediately, AND is sent
+    to your friend's dashboard at the same time.
+
+TROUBLESHOOTING:
+  - "Could not connect to AI backend" in the browser -> Terminal A
+    (the backend) isn't running, or the frontend can't reach it. Make
+    sure Terminal A shows "Uvicorn running on http://0.0.0.0:8000" with
+    no errors.
+  - Detection works on your screen but never shows up on her map ->
+    check DASHBOARD_URL was set correctly BEFORE you started Terminal A
+    (changing it after requires restarting Terminal A), that you're both
+    on the same WiFi, AND that she's actually deployed a mission on her
+    map (the relay drops alerts with nowhere to send them — no history
+    replay in this prototype). If she's offline, detections queue
+    locally to offline_queue.jsonl and send automatically once the
+    backend can reach her again — nothing is lost.
+  - TESTING BOTH LAPTOPS SOLO ON ONE MACHINE? This backend and her relay
+    server both default to port 8000 — they'll collide on one machine.
+    Run this backend on a different port instead:
+      python -m uvicorn backend.main:app --host 0.0.0.0 --port 8001
+    ...and before starting the frontend, create a file named .env inside
+    the frontend/ folder containing:
+      VITE_API_BASE_URL=http://127.0.0.1:8001
+    Keep DASHBOARD_URL pointed at her relay's real port (8000).

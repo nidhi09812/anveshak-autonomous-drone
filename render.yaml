@@ -1,0 +1,23 @@
+services:
+  # LAPTOP2 relay server — bridges LAPTOP1's detections to the dashboard over WebSocket.
+  - type: web
+    name: anveshak-relay
+    runtime: python
+    rootDir: LAPTOP2_command_center
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn relay_server:app --host 0.0.0.0 --port $PORT
+
+  # LAPTOP1 field backend — FastAPI + YOLO (best.pt) detection service.
+  - type: web
+    name: anveshak-field-backend
+    runtime: python
+    rootDir: LAPTOP1_field_node
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      # Set this to the anveshak-relay service's public URL after it deploys,
+      # e.g. https://anveshak-relay.onrender.com (no trailing slash).
+      - key: DASHBOARD_URL
+        sync: false

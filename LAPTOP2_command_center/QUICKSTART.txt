@@ -1,0 +1,56 @@
+ANVESHAK — LAPTOP 2 (COMMAND CENTER / MAP DASHBOARD) — QUICKSTART
+====================================================================
+
+This is YOUR laptop. It runs the live map dashboard your friend's
+detections show up on. It has TWO parts that both need to be running —
+that means TWO terminal windows.
+
+STEP 1 — TERMINAL A: start the relay server (the bridge to Laptop 1)
+
+    cd LAPTOP2_command_center
+    pip install -r requirements.txt
+    python -m uvicorn relay_server:app --host 0.0.0.0 --port 8000
+
+    Leave this running. It's not the map itself — it's what receives
+    alerts from your friend's laptop and forwards them to your browser.
+
+STEP 2 — TERMINAL B: start the map dashboard (the page you look at)
+
+    cd LAPTOP2_command_center/frontend
+    npm install          (only needed the very first time)
+    npm run dev
+
+    Open the address it prints — normally http://localhost:5173
+
+STEP 3 — find your LAN IP address (so your friend can reach you):
+    Windows:      ipconfig            -> look for "IPv4 Address"
+    Mac/Linux:    ifconfig / ip addr  -> something like 192.168.1.20
+
+    Send that IP to your friend — she needs it to point her laptop's
+    DASHBOARD_URL at http://<your-ip>:8000 (note: port 8000, the relay,
+    NOT the 5173 the map page itself runs on).
+
+STEP 4 — deploy a mission (this is what "arms" the live feed):
+    On the map, click "Select Region on Map", click 4 points to draw a
+    box, then click "Deploy UAV Mission". The dashboard only listens for
+    live alerts once a mission is active — this matches how the map's
+    patrol/telemetry simulation is designed to work.
+
+WHAT YOU'LL SEE:
+  - A cyan dot = the (simulated) drone patrolling its sweep pattern.
+  - A green home icon = fixed Home Base / rescue command point.
+  - Red numbered circles = rescue targets (people spotted).
+  - Orange/blue icons = hazards (fire/flood) spotted.
+  - A dashed amber line = the "Safe Path" from Home Base to the newest
+    target — this is a PROTOTYPE VISUALIZATION only (see the label in
+    the sidebar), not a real, certified flight route. If an earlier
+    hazard sits close to that line, the path visibly bends around it.
+
+MAKE SURE:
+  - Both laptops are on the SAME WiFi network (or she's joined a hotspot
+    you created). No internet required — this is all local traffic.
+  - Your firewall allows Python on port 8000 (Windows may prompt the
+    first time — click Allow).
+  - You deployed a mission (Step 4) BEFORE she uploads an image, or her
+    detection has nowhere to go (the relay just logs a warning and
+    drops it — there's no history/replay in this prototype).
