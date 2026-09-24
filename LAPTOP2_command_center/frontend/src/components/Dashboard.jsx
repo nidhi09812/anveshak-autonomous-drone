@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMapEvents, Polygon } from 'react-leaflet';
 import L from 'leaflet';
-import { Activity, Battery, AlertTriangle, Crosshair, MapPin, MousePointer2, Home, ShieldAlert } from 'lucide-react';
+import { Activity, Battery, AlertTriangle, Crosshair, MapPin, MousePointer2, Home, ShieldAlert, UploadCloud } from 'lucide-react';
+import { detectImage } from '../api.js';
 
 // Icons/order for the per-class detection tally, matching Laptop 1's
 // upload-page class legend so both screens read the same way.
@@ -185,6 +186,8 @@ export default function Dashboard() {
   const [altitude, setAltitude] = useState(0.0);
   const [wsConnected, setWsConnected] = useState(false);
   const [latestDetection, setLatestDetection] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
 
   const currentPosRef = useRef(HOME_BASE);
   const wsRef = useRef(null);
@@ -229,6 +232,23 @@ export default function Dashboard() {
       setDronePos(grid[0]);
       currentPosRef.current = grid[0];
       setBattery(98);
+    }
+  };
+
+  // Upload a field image straight from this dashboard: it's sent to the
+  // LAPTOP1 field backend's /detect, which runs YOLO and then forwards the
+  // result back here over the relay's WebSocket (handled below) — so we
+  // don't need to touch `targets`/`latestDetection` directly on success.
+  const handleUpload = async (file) => {
+    if (!file) return;
+    setUploading(true);
+    setUploadError(null);
+    try {
+      await detectImage(file);
+    } catch (error) {
+      setUploadError(error.message || 'Upload failed.');
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -582,10 +602,39 @@ export default function Dashboard() {
           </h2>
         </div>
 
+        {sysState === 'ACTIVE' && (
+          <div className="p-4 border-b border-slate-700">
+            <label
+              className={`flex flex-col items-center justify-center gap-2 border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors ${
+                uploading ? 'border-slate-600 opacity-60 pointer-events-none' : 'border-slate-600 hover:border-cyan-500'
+              }`}
+            >
+              <UploadCloud size={20} className="text-cyan-400" />
+              <span className="text-xs text-slate-300">
+                {uploading ? 'Detecting…' : 'Upload a field image to run detection'}
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                disabled={uploading}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  handleUpload(file);
+                  e.target.value = '';
+                }}
+              />
+            </label>
+            {uploadError && (
+              <div className="text-[11px] text-red-400 mt-2">{uploadError}</div>
+            )}
+          </div>
+        )}
+
         {!latestDetection ? (
           <div className="flex-1 flex items-center justify-center p-6 text-center text-slate-600 text-sm italic">
             {sysState === 'ACTIVE'
-              ? 'Waiting for Laptop 1 to send a detection...'
+              ? 'Waiting for a detection — upload an image above, or wait for Laptop 1.'
               : 'Deploy a mission to start receiving detections.'}
           </div>
         ) : (
